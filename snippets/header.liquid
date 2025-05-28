@@ -1,0 +1,17 @@
+{% comment %}
+  we want to use the header as the shop.name, while shop is an object 
+
+  linklists - all of the menus in the store -> main-menu will get all the attributes that that it holds, which is the collection(catalog)
+  contact(contact) and the home page will be '/' which is home 
+
+  if we will want to get the footer, then we will do linklists['footer'].links and this will get us the search !!
+{% endcomment %}
+
+<header>
+    <h1>{{shop.name}}</h1>
+    <ul>
+        {% for link in linklists.main-menu.links -%}
+        <li>{{ link.title | link_to: link.url }}</li>
+        {%- endfor %}
+    </ul>
+</header>

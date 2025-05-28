@@ -1,0 +1,28 @@
+{% comment %}
+ this will show the url of pants - asset_url will get the url from the file of assets
+{{ 'pants.png' | asset_url }}  
+ so if we want to get for example an image, then we need the url of the image to an image tag
+{% endcomment %}
+
+{% comment %}
+  when we want to run a product through our collections then whe want to use the next command
+  collections['frontpage'] - tghis is the handle of our url in the shopify store
+{% endcomment %}
+
+<h2>{{ collections.['frontpage'].title }}</h2>
+{% for product in collections['frontpage'].products %}
+    {% comment %}
+      we want to get the image, product title and price -> we take the images from shopify and get the url with the image_url filter
+      we add a h3 header with the title
+      and we display with a paragraph the price of the product
+    {% endcomment %}
+    <div>
+        {% comment %}
+          note that when we use the product.url, we get the product.liquid for that specific product, and it is being rendered to the website
+        {% endcomment %}
+        <a href="{{ product.url }}">To go to page</a>
+        <img src="{{ product.featured_image | image_url}}" width="400" height="400">
+        <h3>{{ product.title }}</h3>
+        <p>{{ product.price | money}}</p>
+    </div>
+{% endfor %}

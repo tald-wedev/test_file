@@ -1,0 +1,20 @@
+{% form 'cart' , cart%}
+    <h1>Cart</h1>
+
+    <h2>Number of items: {{ cart.item_count }}</h2>
+
+    {% for item in cart.items %}
+        <div>
+            <img src="{{ item.image  | image_url}}" width="250" height="250">
+            <h2>{{item.title}}</h2>
+            <h3>price: {{ item.price }}</h3>
+            <p>{{ item.description }}</p>
+            <a href="{{ item.url_to_remove }}">Remove</a>
+        </div>
+    {% endfor %}
+
+    <hr/>
+
+    <p>Total cart is: {{ cart.total_price | money }}</p>
+    <button type="submit" name="checkout">checkout</button>
+{% endform %}
