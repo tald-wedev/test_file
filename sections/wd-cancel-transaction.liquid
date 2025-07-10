@@ -27,7 +27,7 @@
             <h2 class="contact__form__heading" data-aos="hero" data-aos-anchor="{{ animation_anchor }}" data-aos-order="{{ animation_order }}">{{ section.settings.heading }}</h2>
         {% endif %}
 
-        {% form 'contact' %}
+        {% form 'contact', page %}
 
             {%- if form.posted_successfully? -%}
                 <p class="form-success">
