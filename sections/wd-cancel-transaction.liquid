@@ -1,6 +1,97 @@
-{% schema %}
-  {
-    "name": "Section name",
-    "settings": []
+{%- liquid
+  assign color_scheme = 'color-' | append: section.settings.color_scheme
+  assign animation_anchor = '#ContactForm--' | append: section.id
+  assign animation_order = 1
+  if request.locale.iso_code == 'he'
+    assign translate_fields = true
+  else
+    assign translate_fields = false
+  endif
+-%}
+
+{%- style -%}
+  #ContactForm--{{ section.id }} {
+    --PT: {{ section.settings.padding_top }}px;
+    --PB: {{ section.settings.padding_bottom }}px;
   }
+{%- endstyle -%}
+
+<section
+  id="CancelTransactionForm--{{ section.id }}"
+  class="index-contact section-padding {{ color_scheme }}"
+  data-section-id="{{ section.id }}"
+  data-section-type="contact"
+>
+    <div class="{{ section.settings.width }}">
+        {% if section.settings.heading %}
+            <h2 class="contact__form__heading" data-aos="hero" data-aos-anchor="{{ animation_anchor }}" data-aos-order="{{ animation_order }}">{{ section.settings.heading }}</h2>
+        {% endif %}
+
+        {% form 'contact' %}
+
+            {%- if form.posted_successfully? -%}
+                <p class="form-success">
+                {{ 'contact.form.post_success' | t }}
+                </p>
+            {%- endif -%}
+
+            {{ form.errors | default_errors }}
+
+            <div class="custom-form__block" data-aos="hero" data-aos-anchor="{{ animation_anchor }}" data-aos-order="{{ animation_order }}">
+                <input class="contactFormText field" type="text" name="contact[name]" id="last-name" placeholder="שם מלא" required />
+            </div>
+
+            <div class="custom-form__block" data-aos="hero" data-aos-anchor="{{ animation_anchor }}" data-aos-order="{{ animation_order }}">
+                <input class="contactFormPhone field" type="tel" name="contact[phone]" id="phone" placeholder="טלפון" value="" required />
+            </div>
+
+            <div class="custom-form__block" data-aos="hero" data-aos-anchor="{{ animation_anchor }}" data-aos-order="{{ animation_order }}">
+                <input class="contactFormEmail field" type="email" name="contact[email]" id="email" placeholder="אימייל" autocorrect="off" autocapitalize="off" required />
+            </div>
+
+            <div class="custom-form__block" data-aos="hero" data-aos-anchor="{{ animation_anchor }}" data-aos-order="{{ animation_order }}">
+                <input class="contactFormText field" type="text" name="contact[order_number]" id="order-number" placeholder="מספר הזמנה" required />
+            </div>
+
+            <div class="custom-form__block" data-aos="hero" data-aos-anchor="{{ animation_anchor }}" data-aos-order="{{ animation_order }}">
+                <textarea class="contactFormMessage field" rows="10" name="contact[body]" id="message" placeholder="סיבת ביטול" required></textarea>
+            </div>
+
+            <div class="submit">
+                <input class="btn btn--primary btn--solid btn--full" type="submit" value="שליחה" />
+            </div>
+        {% endform %}
+    </div>
+</section>
+
+{% schema %}
+
+    {
+        "name": "WD Cancel Order Form",
+        "settings": [
+            {  
+                "type":"text",
+                "id":"heading",
+                "label":"Heading",
+                "default":"ביטול הזמנה"
+            },
+            {
+                "type": "select",
+                "id": "width",
+                "label": "Width",
+                "default": "wrapper--narrow",
+                "options" : [
+                    {"value": "wrapper", "label": "Normal"},
+                    {"value":"wrapper--narrow", "label":"Narrow"}
+                ]
+            }
+        ],
+
+        "presets": [
+            {
+                "name": "WD Cancel Order Form",
+                "category": "Custom"
+            }
+        ]
+    }
 {% endschema %}
