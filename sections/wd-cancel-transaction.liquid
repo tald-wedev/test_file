@@ -27,8 +27,9 @@
             <h2 class="contact__form__heading" data-aos="hero" data-aos-anchor="{{ animation_anchor }}" data-aos-order="{{ animation_order }}">{{ section.settings.heading }}</h2>
         {% endif %}
 
-        {% form 'contact', page %}
-
+        {% form 'contact' %}
+            <input type="hidden" name="return_to" value="{{ request.path }}">
+            
             {%- if form.posted_successfully? -%}
                 <p class="form-success">
                 {{ 'contact.form.post_success' | t }}
@@ -38,7 +39,7 @@
             {{ form.errors | default_errors }}
 
             <div class="custom-form__block" data-aos="hero" data-aos-anchor="{{ animation_anchor }}" data-aos-order="{{ animation_order }}">
-                <input class="contactFormText field" type="text" name="contact[name]" id="last-name" placeholder="שם מלא" required />
+                <input class="contactFormText field" type="text" name="contact[name]" id="full_name" placeholder="שם מלא" required>
             </div>
 
             <div class="custom-form__block" data-aos="hero" data-aos-anchor="{{ animation_anchor }}" data-aos-order="{{ animation_order }}">
