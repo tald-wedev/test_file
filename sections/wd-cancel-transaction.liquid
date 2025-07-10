@@ -29,9 +29,8 @@
 
         {% form 'contact' %}
             <input type="hidden" name="return_to" value="{{ request.path }}">
-            
+
             {%- if form.posted_successfully? -%}
-              <script>window.location = "/pages/order_cancelation_form";</script>
                 <p class="form-success">
                 {{ 'contact.form.post_success' | t }}
                 </p>
@@ -60,7 +59,7 @@
             </div>
 
             <div class="submit">
-                <input class="btn btn--primary btn--solid btn--full" type="submit" value="שליחה" />
+                <button class="btn btn--primary btn--solid btn--full" type="submit" value="שליחה"></button>
             </div>
         {% endform %}
     </div>
