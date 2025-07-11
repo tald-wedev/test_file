@@ -67,6 +67,30 @@
     </div>
 </section>
 
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    const iframe = document.getElementById('hidden_iframe');
+
+    iframe.addEventListener('load', function () {
+      try {
+        const url = iframe.contentWindow.location.href;
+        if (url.includes('contact_posted=true')) {
+          // Success! Show message or do whatever you want.
+          const successMsg = document.createElement('div');
+          successMsg.textContent = 'ההודעה נשלחה בהצלחה!';
+          successMsg.className = 'form-success-message';
+          form.insertAdjacentElement('beforebegin', successMsg);
+          form.reset();
+        }
+      } catch (e) {
+        // Prevent CORS issues or iframe access errors
+        console.warn('Iframe redirect blocked or inaccessible.');
+      }
+    });
+  });
+</script>
+
 {% schema %}
 
     {
