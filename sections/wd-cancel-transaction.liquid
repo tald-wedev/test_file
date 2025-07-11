@@ -27,7 +27,7 @@
             <h2 class="contact__form__heading" data-aos="hero" data-aos-anchor="{{ animation_anchor }}" data-aos-order="{{ animation_order }}">{{ section.settings.heading }}</h2>
         {% endif %}
 
-        {% form 'contact', target: 'hidden_iframe' %}
+        {% form 'contact' %}
 
             {%- if form.posted_successfully? -%}
                 <p class="form-success">
@@ -60,38 +60,28 @@
             <div class="submit">
                 <input class="btn btn--primary btn--solid btn--full" type="submit" value="שליחה"/>
             </div>
-
-            <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
-
         {% endform %}
     </div>
 </section>
 
+
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const form = document.querySelector('form');
-    const iframe = document.getElementById('hidden_iframe');
+  document.addEventListener('DOMContentLoaded', function () {
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('contact_posted') === 'true') {
+    const successMsg = document.createElement('div');
+    successMsg.textContent = 'ההודעה נשלחה בהצלחה!';
+    successMsg.className = 'form-success-message';
+    document.querySelector('form').insertAdjacentElement('beforebegin', successMsg);
 
-    iframe.addEventListener('load', function () {
-      try {
-        const url = iframe.contentWindow.location.href;
-        if (url.includes('contact_posted=true')) {
-          // Success! Show message or do whatever you want.
-          const successMsg = document.createElement('div');
-          successMsg.textContent = 'ההודעה נשלחה בהצלחה!';
-          successMsg.className = 'form-success-message';
-          form.insertAdjacentElement('beforebegin', successMsg);
-          form.reset();
-        }
-      } catch (e) {
-        // Prevent CORS issues or iframe access errors
-        console.warn('Iframe redirect blocked or inaccessible.');
-        consol.warn('message: ' + e.message);
-      }
-    });
-  });
+    // Optional: remove query params from URL so it doesn't keep showing
+    const url = new URL(window.location);
+    url.searchParams.delete('contact_posted');
+    url.searchParams.delete('oseid');
+    window.history.replaceState({}, document.title, url.pathname);
+  }
+});
 </script>
-
 {% schema %}
 
     {
