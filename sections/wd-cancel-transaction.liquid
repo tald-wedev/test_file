@@ -27,7 +27,7 @@
             <h2 class="contact__form__heading" data-aos="hero" data-aos-anchor="{{ animation_anchor }}" data-aos-order="{{ animation_order }}">{{ section.settings.heading }}</h2>
         {% endif %}
 
-        {% form 'contact' %}
+        {% form 'contact', action: request.path %}
 
             {%- if form.posted_successfully? -%}
                 <p class="form-success">
@@ -64,24 +64,6 @@
     </div>
 </section>
 
-
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-  const urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.get('contact_posted') === 'true') {
-    const successMsg = document.createElement('div');
-    successMsg.textContent = 'ההודעה נשלחה בהצלחה!';
-    successMsg.className = 'form-success-message';
-    document.querySelector('form').insertAdjacentElement('beforebegin', successMsg);
-
-    // Optional: remove query params from URL so it doesn't keep showing
-    const url = new URL(window.location);
-    url.searchParams.delete('contact_posted');
-    url.searchParams.delete('oseid');
-    window.history.replaceState({}, document.title, url.pathname);
-  }
-});
-</script>
 {% schema %}
 
     {
