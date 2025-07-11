@@ -86,6 +86,7 @@
       } catch (e) {
         // Prevent CORS issues or iframe access errors
         console.warn('Iframe redirect blocked or inaccessible.');
+        consol.warn('message: ' + e.message);
       }
     });
   });
