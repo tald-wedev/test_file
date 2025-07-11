@@ -63,6 +63,30 @@
         {% endform %}
     </div>
 </section>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('contact_posted') === 'true') {
+      // Find existing success message <p> or create one
+      let successMsg = document.querySelector('.form-success');
+      if (!successMsg) {
+        successMsg = document.createElement('p');
+        successMsg.className = 'form-success';
+        successMsg.textContent = 'ההודעה נשלחה בהצלחה!';
+        const form = document.querySelector('form');
+        form.insertAdjacentElement('beforebegin', successMsg);
+      } else {
+        successMsg.style.display = 'block';
+      }
+
+      // Optional: clean URL to remove query params
+      const url = new URL(window.location);
+      url.searchParams.delete('contact_posted');
+      url.searchParams.delete('oseid');
+      window.history.replaceState({}, document.title, url.pathname);
+    }
+  });
+</script>
 
 {% schema %}
 
