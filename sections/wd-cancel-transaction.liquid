@@ -27,7 +27,7 @@
             <h2 class="contact__form__heading" data-aos="hero" data-aos-anchor="{{ animation_anchor }}" data-aos-order="{{ animation_order }}">{{ section.settings.heading }}</h2>
         {% endif %}
 
-        {% form 'contact' %}
+        {% form 'contact', target: 'hidden_iframe' %}
 
             {%- if form.posted_successfully? -%}
                 <p class="form-success">
@@ -60,6 +60,9 @@
             <div class="submit">
                 <input class="btn btn--primary btn--solid btn--full" type="submit" value="שליחה"/>
             </div>
+
+            <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+
         {% endform %}
     </div>
 </section>
