@@ -1,3 +1,5 @@
+{% comment %} all works, the only problem is that when we submit it moves me to a different url page {% endcomment %}
+ {% comment %} complete this on sunday - the url request is here  {% endcomment %}
 {%- liquid
   assign color_scheme = 'color-' | append: section.settings.color_scheme
   assign animation_anchor = '#ContactForm--' | append: section.id
@@ -28,7 +30,6 @@
         {% endif %}
 
         {% form 'contact' %}
-  <input type="hidden" name="return_to" value="{{ request.path }}">
             {%- if form.posted_successfully? -%}
                 <p class="form-success">
                 {{ 'contact.form.post_success' | t }}
@@ -58,34 +59,16 @@
             </div>
 
             <div class="submit">
-                <input class="btn btn--primary btn--solid btn--full" type="submit" value="שליחה"/>
+                <input class="btn btn--primary btn--solid btn--full" type="submit" value="שליחה" />
             </div>
         {% endform %}
     </div>
 </section>
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('contact_posted') === 'true') {
-      // Find existing success message <p> or create one
-      let successMsg = document.querySelector('.form-success');
-      if (!successMsg) {
-        successMsg = document.createElement('p');
-        successMsg.className = 'form-success';
-        successMsg.textContent = 'ההודעה נשלחה בהצלחה!';
-        const form = document.querySelector('form');
-        form.insertAdjacentElement('beforebegin', successMsg);
-      } else {
-        successMsg.style.display = 'block';
-      }
 
-      // Optional: clean URL to remove query params
-      const url = new URL(window.location);
-      url.searchParams.delete('contact_posted');
-      url.searchParams.delete('oseid');
-      window.history.replaceState({}, document.title, url.pathname);
-    }
-  });
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const submitButton = document.querySelector('.submit input[type="submit"]');})
+        const currentPath = window.location.pathname;
 </script>
 
 {% schema %}
