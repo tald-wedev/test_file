@@ -28,8 +28,9 @@
         {% if section.settings.heading %}
             <h2 class="contact__form__heading" data-aos="hero" data-aos-anchor="{{ animation_anchor }}" data-aos-order="{{ animation_order }}">{{ section.settings.heading }}</h2>
         {% endif %}
-
         {% form 'contact' %}
+            <input type="hidden" name="return_to" value="/pages/about-us?view=order_cancelation_form">
+
             {%- if form.posted_successfully? -%}
                 <p class="form-success">
                 {{ 'contact.form.post_success' | t }}
@@ -65,11 +66,22 @@
     </div>
 </section>
 
-{% comment %} <script>
+<script>
     document.addEventListener('DOMContentLoaded', function() {
-        const submitButton = document.querySelector('.submit input[type="submit"]');})
-        const currentPath = window.location.pathname;
-</script> {% endcomment %}
+        const urlParams = new URLSearchParams(window.location.search);
+
+        if(urlParams.get('contact_posted') === "true") {
+            window.location.href = '/pages/order_cancelation_form?success=true';
+        }
+
+        if (window.location.pathname === '/pages/order_cancelation_form' && urlParams.get('success') === 'true') {
+            const successMessage = document.createElement('p');
+            successMessage.className = 'form-success';
+            successMessage.textContent = 'Your form has been submitted successfully!';
+            document.body.prepend(successMessage);
+        }
+    })
+</script>
 
 {% schema %}
 
