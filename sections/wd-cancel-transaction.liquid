@@ -29,7 +29,7 @@
             <h2 class="contact__form__heading" data-aos="hero" data-aos-anchor="{{ animation_anchor }}" data-aos-order="{{ animation_order }}">{{ section.settings.heading }}</h2>
         {% endif %}
         {% form 'contact' %}
-            <input type="hidden" name="return_to" value="/pages/about-us?view=order_cancelation_form">
+            <input type="hidden" name="return_to" value="/pages/order-cancelation-form">
 
             {%- if form.posted_successfully? -%}
                 <p class="form-success">
