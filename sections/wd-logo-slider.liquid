@@ -1,11 +1,9 @@
-<!-- WeDev -->
-<!-- This file is for WD LOGO SLIDER styles only -->
-
+<!-- WeDev Logo Slider Section -->
 <style>
-  .wd-logo-list--carousel{
-   width: 92%; 
-   margin: auto;
-  } 
+  .wd-logo-list--carousel {
+    width: 92%;
+    margin: auto;
+  }
 
   .wd-logo-list--carousel .flickity-button {
     color: black;
@@ -13,146 +11,120 @@
     width: 40px;
     position: relative;
     margin-top: 26px;
-    top:60%;
+    top: 60%;
   }
 
-  .wd-logo-list--carousel .flickity-prev-next-button.next{
+  .wd-logo-list--carousel .flickity-prev-next-button.next {
     right: 0;
     left: auto;
-    order:-1;
+    order: -1;
   }
 
-  .wd-logo-list--carousel .flickity-viewport{
+  .wd-logo-list--carousel .flickity-viewport {
     height: 114px !important;
   }
 
-  .wd-logo-slider-wrapper.carousel{
+  .wd-logo-slider-wrapper.carousel {
     display: flex;
     align-items: center;
   }
 
-  .wd-logo-list--carousel .carousel-cell{
-    width: 20%;
-    margin: 0px 0px;
+  .wd-logo-list--carousel .carousel-cell {
+    width: calc(100% / 6);
+    margin: 0;
   }
 
-  .wd-logo-slider__image{
-    max-height:70px; 
+  .wd-logo-slider__image {
+    max-height: 70px;
+    width: auto;
+    margin: 0 auto;
   }
 
-  .wd-logo-list--header{
+  .wd-logo-list--header {
     text-align: left;
     font-size: 1.5em;
   }
 
   @media screen and (max-width: 767px) {
-    .wd-logo-list--carousel .carousel-cell{
-      width: 33.33%;
-      margin: 0px 0px;
+    .wd-logo-list--carousel .carousel-cell {
+      width: calc(100% / 3);
     }
 
-    .wd-logo-slider__image{
-      max-height:48px; 
+    .wd-logo-slider__image {
+      max-height: 48px;
     }
 
     .wd-logo-list--carousel .flickity-button {
-      color: black;
-      background-color: transparent;
       width: 20px;
-      position: relative;
     }
 
     .wd-logo-list--carousel .flickity-viewport {
-      height: 64.9375px !important;
+      height: 65px !important;
       touch-action: pan-y;
     }
 
     .wd-logo-list--carousel {
       width: 100%;
-      margin: auto;
     }
   }
 </style>
 
-<style>
-  #shopify-section-{{ section.id }} {
-    {%- if section.settings.background == 'rgba(0,0,0,0)' -%}
-      {%- assign section_background = settings.background -%}
-    {%- else -%}
-      {%- assign section_background = section.settings.background -%}
-    {%- endif -%}
-
-    {%- if section.settings.text_color == 'rgba(0,0,0,0)' -%}
-      {%- assign heading_color = settings.heading_color -%}
-      {%- assign text_color = settings.text_color -%}
-    {%- else -%}
-      {%- assign heading_color = section.settings.text_color -%}
-      {%- assign text_color = section.settings.text_color -%}
-    {%- endif -%}
-
-    {%- if section.settings.button_background == 'rgba(0,0,0,0)' -%}
-      {%- assign button_background = settings.primary_button_background -%}
-    {%- else -%}
-      {%- assign button_background = section.settings.button_background -%}
-    {%- endif -%}
-
-    {%- if section.settings.button_text_color == 'rgba(0,0,0,0)' -%}
-      {%- assign button_text_color = settings.primary_button_text_color -%}
-    {%- else -%}
-      {%- assign button_text_color = section.settings.button_text_color -%}
-    {%- endif -%}
-
-    --heading-color: {{ heading_color.red }}, {{ heading_color.green }}, {{ heading_color.blue }};
-    --text-color: {{ text_color.red }}, {{ text_color.green }}, {{ text_color.blue }};
-    --primary-button-background: {{ button_background.red }}, {{ button_background.green }}, {{ button_background.blue }};
-    --primary-button-text-color: {{ button_text_color.red }}, {{ button_text_color.green }}, {{ button_text_color.blue }};
-
-    --prev-next-button-background: {{ settings.background.red }}, {{ settings.background.green }}, {{ settings.background.blue }};
-    --prev-next-button-color: {{ settings.text_color.red }}, {{ settings.text_color.green }}, {{ settings.text_color.blue }};
-
-    --section-background: {{ section_background.red }}, {{ section_background.green }}, {{ section_background.blue }};
-    --section-logo-background: {{ section.settings.logo_background.red }} {{ section.settings.logo_background.green }} {{ section.settings.logo_background.blue }} / {{ section.settings.logo_background.alpha }};
-    --section-logo-count: {{ section.blocks.size | default: 6 }};
-  }
-</style>
-
 <section class="wd-logo-slider-outer-wrapper section">
-    <div class="wd-logo-slider-container">
-        <div class="wd-logo-list--carousel">
-            {% if section.settings.header_text != blank %}
-              <h3 class="wd-logo-list--header">
-                {{ section.settings.header_text }}
-              </h3>
-            {% endif %}
-            <div class="wd-logo-slider-wrapper carousel main-carousel  js-flickity" data-flickity='{"autoPlay": true, "freeScroll": true, "wrapAround": true, "pageDots": false, "draggable": true, "prevNextButtons": true }'>
-                {%- for block in section.blocks -%}
-                    {%- if block.settings.link -%}
-                    <a href="{{ block.settings.link }}" class="logo-list__item carousel-cell" {{ block.shopify_attributes }}>
-                    {%- else -%}
-                    <div class="logo-list__item carousel-cell" {{ block.shopify_attributes }}>
-                    {%- endif -%}
-                    {%- if block.settings.logo != blank -%}
-                        <img loading="lazy" src="{{ block.settings.logo  | img_url: '3000x' }}" class="wd-logo-slider__image" alt="">
-                    {%- else -%}
-                        {{- 'image' | placeholder_svg_tag: 'logo-list__image logo-list__image--placeholder' -}}
-                    {%- endif -%}
-                    {%- if block.settings.link -%}
-                    </a>
-                    {%- else -%}
-                        </div>
-                    {%- endif -%}
-                {%- endfor -%}
-            </div>
-        </div>
+  <div class="wd-logo-slider-container">
+    <div class="wd-logo-list--carousel">
+      {% if section.settings.header_text != blank %}
+        <h3 class="wd-logo-list--header">{{ section.settings.header_text }}</h3>
+      {% endif %}
 
-      {%- if section.settings.button_text != blank -%}
-        <div class="section__footer">
-          <a class="button button--primary" href="{{ section.settings.button_link }}">{{ section.settings.button_text }}</a>
-        </div>
+      {%- assign should_autoplay = false -%}
+      {%- if section.blocks.size >= 6 -%}
+        {%- assign should_autoplay = true -%}
       {%- endif -%}
+
+      <div class="wd-logo-slider-wrapper carousel main-carousel js-flickity"
+        data-flickity='{
+          "autoPlay": {{ should_autoplay | json }},
+          "wrapAround": {{ should_autoplay | json }},
+          "pageDots": false,
+          "prevNextButtons": true,
+          "draggable": true,
+          "pauseAutoPlayOnHover": true
+        }'>
+
+        {%- for block in section.blocks -%}
+          {%- if block.settings.link -%}
+            <a href="{{ block.settings.link }}" class="logo-list__item carousel-cell" {{ block.shopify_attributes }}>
+          {%- else -%}
+            <div class="logo-list__item carousel-cell" {{ block.shopify_attributes }}>
+          {%- endif -%}
+
+          {%- if block.settings.logo != blank -%}
+            <img loading="lazy" src="{{ block.settings.logo | img_url: '300x' }}" class="wd-logo-slider__image" alt="Logo">
+          {%- else -%}
+            {{ 'image' | placeholder_svg_tag: 'logo-list__image logo-list__image--placeholder' }}
+          {%- endif -%}
+
+          {%- if block.settings.link -%}
+            </a>
+          {%- else -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
     </div>
+
+    {% if section.settings.button_text != blank %}
+      <div class="section__footer">
+        <a class="button button--primary" href="{{ section.settings.button_link }}">
+          {{ section.settings.button_text }}
+        </a>
+      </div>
+    {% endif %}
+  </div>
 </section>
-{{ 'flickity.js' | asset_url | script_tag  }}
+
+{{ 'flickity.js' | asset_url | script_tag }}
+
 {% schema %}
 {
   "name": "WD Logo slider",
@@ -186,7 +158,7 @@
     {
       "type": "color",
       "id": "button_text_color",
-      "label": "Button text",
+      "label": "Button text color",
       "default": "rgba(0,0,0,0)"
     },
     {
@@ -219,24 +191,12 @@
     {
       "name": "WD Logo slider",
       "blocks": [
-        {
-          "type": "logo"
-        },
-        {
-          "type": "logo"
-        },
-        {
-          "type": "logo"
-        },
-        {
-          "type": "logo"
-        },
-        {
-          "type": "logo"
-        },
-        {
-          "type": "logo"
-        }
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" }
       ]
     }
   ]
