@@ -1,3 +1,79 @@
+<!-- WeDev -->
+<!-- This file is for WD LOGO SLIDER styles only -->
+
+<style>
+  .wd-logo-list--carousel{
+   width: 92%; 
+   margin: auto;
+  } 
+
+  .wd-logo-list--carousel .flickity-button {
+    color: black;
+    background-color: transparent;
+    width: 40px;
+    position: relative;
+    margin-top: 26px;
+    top:60%;
+  }
+
+  .wd-logo-list--carousel .flickity-prev-next-button.next{
+    right: 0;
+    left: auto;
+    order:-1;
+  }
+
+  .wd-logo-list--carousel .flickity-viewport{
+    height: 114px !important;
+  }
+
+  .wd-logo-slider-wrapper.carousel{
+    display: flex;
+    align-items: center;
+  }
+
+  .wd-logo-list--carousel .carousel-cell{
+    width: 20%;
+    margin: 0px 0px;
+  }
+
+  .wd-logo-slider__image{
+    max-height:70px; 
+  }
+
+  .wd-logo-list--header{
+    text-align: left;
+    font-size: 1.5em;
+  }
+
+  @media screen and (max-width: 767px) {
+    .wd-logo-list--carousel .carousel-cell{
+      width: 33.33%;
+      margin: 0px 0px;
+    }
+
+    .wd-logo-slider__image{
+      max-height:48px; 
+    }
+
+    .wd-logo-list--carousel .flickity-button {
+      color: black;
+      background-color: transparent;
+      width: 20px;
+      position: relative;
+    }
+
+    .wd-logo-list--carousel .flickity-viewport {
+      height: 64.9375px !important;
+      touch-action: pan-y;
+    }
+
+    .wd-logo-list--carousel {
+      width: 100%;
+      margin: auto;
+    }
+  }
+</style>
+
 <style>
   #shopify-section-{{ section.id }} {
     {%- if section.settings.background == 'rgba(0,0,0,0)' -%}
