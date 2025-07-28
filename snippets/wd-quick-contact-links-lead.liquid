@@ -1,0 +1,54 @@
+<div class="wd-ql-container">
+    <h2 class="wd-ql-title">
+        {{ 'wd-seat-cover-product.quick_contact_links_lead.title' | t }}
+    </h2>
+    <p class="wd-ql-description">
+        {{ 'wd-seat-cover-product.quick_contact_links_lead.description' | t }}
+    </p>
+    <div class="wd-ql-links">
+        {% comment %} WhatsApp {% endcomment %}
+        <a href="https://wa.me/{{ 'wd-seat-cover-product.quick_contact_links_lead.whatsapp' | t }}" class="wd-ql-link">
+            {% render 'icon', icon: 'whatsapp' %}
+        </a>
+        {% comment %} Phone {% endcomment %}
+        <a href="tel:{{ 'wd-seat-cover-product.quick_contact_links_lead.phone' | t }}" class="wd-ql-link">
+            {% render 'icon', icon: 'phone' %}
+        </a>
+    </div>
+</div>
+
+<style>
+    .wd-ql-container {
+        padding: 16px;
+        padding-top: 0;
+        width: 100%;
+        background: #ffffff;
+    }
+    .wd-ql-title {
+        margin: 0;
+        align-self: stretch;
+        color: var(--Gray-2, #2C2C2E);
+        text-align: right;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 140%;
+    }
+
+    .wd-ql-description {
+        margin: 0;
+        align-self: stretch;
+        color: var(--Gray-2, #2C2C2E);
+        text-align: right;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 140%;
+    }
+
+    .wd-ql-links {
+        display: flex;
+        gap: 16px;
+        padding-top: 16px;
+    }
+</style>
