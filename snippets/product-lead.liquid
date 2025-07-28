@@ -26,7 +26,8 @@
 
 
     {% comment %} appending the options that will be passed to the dropdown {% endcomment %}
-     {% assign colors = product.metafields.shopify.color-pattern.value %}
+     {% assign colors = product.metafields.custom.colors.value %}
+     {% assign colors = product.metafields.custom.color-pattern.value %}
      {% assign color_options = '' %}
      {% for color in colors %}
       {% assign option_value = 'option' | append: forloop.index %}
