@@ -1,0 +1,99 @@
+{% comment %} TODO: SPLIT INTO 3 PARTS {% endcomment %}
+{% comment %} 1. main - wd-length-selector.liquid {% endcomment %}
+{% comment %} 2. js - wd-js-length-selector.liquid {% endcomment %}
+{% comment %} 3. css - wd-styles-length-selector.liquid {% endcomment %}
+
+{% comment %} WeDev {% endcomment %}
+{% comment %} Length Selector (based on products ) {% endcomment %}
+<div>
+    <h2 class="wd-length-selector-title">
+    {{ 'wd-seat-cover-product.length_selector.title' | t }}:
+    </h2>
+    <div class="wd-length-selector-group">
+    <label class="wd-length-selector-option wd-selected">
+        <input type="radio" name="length" value="small" checked hidden>
+        <span>{{ 'wd-seat-cover-product.length_selector.small' | t }}</span>
+    </label>
+    <label class="wd-length-selector-option">
+        <input type="radio" name="length" value="regular" hidden>
+        <span>{{ 'wd-seat-cover-product.length_selector.regular' | t }}</span>
+    </label>
+    <label class="wd-length-selector-option">
+        <input type="radio" name="length" value="long" hidden>
+        <span>{{ 'wd-seat-cover-product.length_selector.long' | t }}</span>
+    </label>
+    <label class="wd-length-selector-option">
+        <input type="radio" name="length" value="xlong" hidden>
+        <span>{{ 'wd-seat-cover-product.length_selector.xlong' | t }}</span>
+    </label>
+    </div>
+</div>
+<style>
+    .wd-length-selector-title {
+        color: var(--text-title, #213236);
+        margin-top:-16px;
+        margin-bottom: 8px;
+        /* mobile/p1-heading */
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 140%; /* 22.4px */
+    }
+
+    .wd-length-selector-group {
+        display: flex;
+        width: 507px;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .wd-length-selector-option {
+        display: flex;
+        padding: 10px;
+        align-items: center;
+        gap: 10px;
+        align-self: stretch;
+
+        border: 1px solid var(--primary-color, #323232);
+        background: #FFF;
+        box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.06);
+    }
+
+    .wd-length-selector-option span {
+        color: var(--text, #333);
+        /* mobile/p1 */
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 140%; /* 22.4px */
+    }
+
+    .wd-length-selector-option.wd-selected {
+        border: 1px solid var(--red, #ED1B2E);
+    }
+
+    .wd-length-selector-option.wd-selected span {
+        color: var(--red, #ED1B2E);
+        /* mobile/p1-heading */
+        font-family: Gibson;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 140%; /* 22.4px */
+    }
+
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const options = document.querySelectorAll('.wd-length-selector-option');
+    options.forEach(option => {
+      option.addEventListener('click', function() {
+        options.forEach(opt => opt.classList.remove('wd-selected'));
+        this.classList.add('wd-selected');
+        // Optionally, set the radio input as checked
+        this.querySelector('input[type="radio"]').checked = true;
+      });
+    });
+  });
+</script>
