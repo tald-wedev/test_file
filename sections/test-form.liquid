@@ -10,7 +10,7 @@
     <div class="wd-personal-info-form-fields">
         
         <div class="wd-personal-info-form-field">
-            <input class="wd-personal-info-form-field-input is-filled" type="text" id="personal-info-name" placeholder=" " required="">
+            <input name="contact[name]" class="wd-personal-info-form-field-input is-filled" type="text" id="personal-info-name" placeholder=" " required="">
             <label for="personal-info-name" class="wd-personal-info-form-field-label">
                 שם
             </label>
@@ -18,7 +18,7 @@
         
         
         <div class="wd-personal-info-form-field">
-            <input class="wd-personal-info-form-field-input is-filled" type="email" id="personal-info-email" placeholder=" " required="">
+            <input name="contact[email]" class="wd-personal-info-form-field-input is-filled" type="email" id="personal-info-email" placeholder=" " required="">
             <label for="personal-info-email" class="wd-personal-info-form-field-label">
                 אימייל
             </label>
@@ -26,7 +26,7 @@
         
         
         <div class="wd-personal-info-form-field">
-            <input class="wd-personal-info-form-field-input is-filled" type="tel" id="personal-info-phone" placeholder=" " required="">
+            <input name="contact[phone]" class="wd-personal-info-form-field-input is-filled" type="tel" id="personal-info-phone" placeholder=" " required="">
             <label for="personal-info-phone" class="wd-personal-info-form-field-label">
                 טלפון
             </label>
@@ -34,7 +34,7 @@
 
         
         <div class="wd-personal-info-form-field">
-            <textarea class="wd-personal-info-form-field-input is-filled" id="personal-info-message" placeholder=" " required=""></textarea>
+            <textarea name="contact[body]" class="wd-personal-info-form-field-input is-filled" id="personal-info-message" placeholder=" " required=""></textarea>
             <label for="personal-info-message" class="wd-personal-info-form-field-label">
                 ההודעה שלך
             </label>
@@ -45,12 +45,12 @@
             צרו איתי קשר
         </span>
     </button>
-    <input type="hidden" name="length" value="small" class="wd-dynamic-input">
-    <input type="hidden" name="שירות התקנה" value="true" class="wd-dynamic-input">
-    <input type="hidden" name="בחר סוג מושב" value="מושב בינוני" class="wd-dynamic-input">
-    <input type="hidden" name="בחר צבע" value="Blue" class="wd-dynamic-input">
-    <input type="hidden" name="בחר סוג ריפוד" value="ריפוד בינוני" class="wd-dynamic-input">
-    <input type="hidden" name="כמות" value="2" class="wd-dynamic-input">
+    <input name="contact[length]" type="hidden" name="length" value="small" class="wd-dynamic-input">
+    <input name="contact[installation-service]" type="hidden" name="שירות התקנה" value="true" class="wd-dynamic-input">
+    <input name="contact[type_of_seat]" type="hidden" name="בחר סוג מושב" value="מושב בינוני" class="wd-dynamic-input">
+    <input name="contact[color]" type="hidden" name="בחר צבע" value="Blue" class="wd-dynamic-input">
+    <input name="contact[type_of_upholstery]" type="hidden" name="בחר סוג ריפוד" value="ריפוד בינוני" class="wd-dynamic-input">
+    <input name="contact[quantity]" type="hidden" name="כמות" value="2" class="wd-dynamic-input">
 {% endform %}
 
 
