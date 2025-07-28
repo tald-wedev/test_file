@@ -1,0 +1,311 @@
+{% comment %} WeDev {% endcomment %}
+{% comment %} Product Lead (CSS Mobile First){% endcomment %}
+<div class="wd-product-lead-container">
+  <div class="wd-product-leads-container">
+    <div class="wd-product-lead-header">
+      <h1 class="wd-product-lead-title">
+        {{ product.title }}
+      </h1>
+      {% comment %} SKU {% endcomment %}
+      <span class="wd-product-lead-sku">
+        {{ 'wd-seat-cover-product.product_lead.sku' | t }} #<span class="wd-product-lead-sku-value">{{ product.selected_or_first_available_variant.sku }}</span>
+      </span>
+      {% comment %} Save 25% Banner {% endcomment %}
+      <div class="wd-product-lead-banner">
+        <span>
+          {{ 'wd-seat-cover-product.product_lead.save_25' | t }}
+        </span>
+      </div>
+    
+      {% comment %} Rating {% endcomment %}
+      <div class="wd-product-lead-rating">
+        {%- render 'product-rating'
+          , product: product -%}
+      </div>
+    </div>
+
+
+    {% comment %} appending the options that will be passed to the dropdown {% endcomment %}
+     {% assign colors = product.metafields.shopify.color-pattern.value %}
+     {% assign color_options = '' %}
+     {% for color in colors %}
+      {% assign option_value = 'option' | append: forloop.index %}
+      {% assign color_label = color.label %}
+      {% assign color_options = color_options | append: option_value | append: ':' | append: color_label %}
+      {% unless forloop.last %}
+        {% assign color_options = color_options | append: ',' %}
+      {% endunless %}
+     {% endfor %}
+
+    {% assign seat_size = product.metafields.custom.seat_size.value %}
+    {% assign seat_options = '' %}
+    {% for size in seat_size %}
+      {% assign option_value = 'option' | append: forloop.index %}
+      {% assign seat_label = size %}
+      {% assign seat_options = seat_options | append: option_value | append: ':' | append: seat_label%}
+      {% unless forloop.last %}
+        {% assign seat_options = seat_options | append: ',' %}
+      {% endunless %}
+    {% endfor %}
+
+    {% assign upholsterys = product.metafields.custom.upholstery_type.value %}
+    {% assign upholstery_options = '' %}
+    {% for upholstery in upholsterys %}
+      {% assign option_value = 'option' | append: forloop.index %}
+      {% assign upholstery_label = upholstery %}
+      {% assign upholstery_options = upholstery_options | append: option_value | append: ':' | append: upholstery_label %}
+      {% unless forloop.last %}
+        {% assign upholstery_options = upholstery_options | append: ',' %}
+      {% endunless %}
+    {% endfor %}
+
+    {% comment %} Form {% endcomment %}
+    <form class="wd-product-lead-form">
+      {% comment %} Length Selector {% endcomment %}
+      {% render 'wd-length-selector' %}
+      
+      {% comment %} Lead Selector Dropdown 1 {% endcomment %}
+      {% comment %} TODO: Get info if data is from metafield or variant | currently passing hardcoded data {% endcomment %}
+      {% render 'wd-lead-selector-dropdown'
+          , title: 'בחר סוג מושב'
+          , options: seat_options
+      %}
+
+      {% comment %} Lead Selector Dropdown 2 {% endcomment %}
+      {% comment %} TODO: Get info if data is from metafield or variant | currently passing hardcoded data {% endcomment %}
+      {% render 'wd-lead-selector-dropdown'
+          , title: 'בחר צבע'
+          , options: color_options
+      %}
+
+      {% comment %} Lead Selector Dropdown 3 {% endcomment %}
+      {% comment %} TODO: Get info if data is from metafield or variant | currently passing hardcoded data {% endcomment %}
+      {% render 'wd-lead-selector-dropdown'
+          , title: 'בחר סוג ריפוד'
+          , options: upholstery_options
+      %}
+
+      {% comment %} Price Selector {% endcomment %}
+      {% comment %} Current Product info is passed as params {% endcomment %}
+      {% render 'wd-price-lead'
+          , price: product.price
+          , stock: product.selected_or_first_available_variant.inventory_quantity
+          , old_price: product.compare_at_price
+      %}
+      
+      {% render 'wd-installation-picker', product: product %}
+
+      <button id="add-to-cart-leads" type="button" class="product-form__add-button button button--primary">הוסף לעגלה</button>
+    </form>
+  </div>
+  {% comment %} Personal Info Form {% endcomment %} 
+   <div id="personal-info-form-container" style="display:none;">
+    {% comment %} Render Personal Info Form {% endcomment %}
+    {% render 'wd-personal-info-form' %}
+
+    {% comment %} Quick Contact Links {% endcomment %}
+    {% render 'wd-quick-contact-links-lead' %}
+   </div>
+   <button type="button" id="custom-demo-button">custom demo button</button>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const installationPickerContainer = document.querySelector('.wd-installation-picker');
+    const hrIntallationPickerDivider = document.querySelector('.seperator-installation-picker');
+    const addToCartButton = document.getElementById('add-to-cart-leads');
+    const personalInfoFormContainer = document.getElementById('personal-info-form-container');
+
+    if(installationPickerContainer) {
+      installationPickerContainer.setAttribute('style', 'margin-top: 0px !important');
+    }
+
+    if(hrIntallationPickerDivider) {
+      hrIntallationPickerDivider.setAttribute('style', 'margin-top: 0px !important; margin-bottom: 0px !important;');
+    }
+
+    addToCartButton.addEventListener('click', function() {
+      personalInfoFormContainer.style.display = 'block';
+      personalInfoFormContainer.style.width = '100%';
+      addToCartButton.style.display = 'none';
+
+      
+      const customDemoButton = document.getElementById('custom-demo-button');
+      const mainForm = document.querySelector('.wd-product-lead-form');
+
+      customDemoButton.addEventListener('click', function() {
+        const formData = new FormData(mainForm);
+        let data = {};
+
+        for(const [name, value] of formData.entries()) {
+          data[name] = value;
+        }
+        {% comment %} debugger; {% endcomment %}
+        const dropdowns = document.querySelectorAll('.wd-lead-selector-dropdown-custom');
+        dropdowns.forEach(function(dropdown, index) {
+          const label = dropdown.closest('.wd-lead-selector-dropdown-wrapper').querySelector('.wd-lead-selector-dropdown-title')?.textContent || 'כמות';
+          const selected = dropdown.querySelector('.wd-lead-selector-dropdown-selected');
+          const value = selected.getAttribute('innerText') || selected.textContent;
+
+          data[label] = value;
+        });
+
+
+        const formInformation = document.querySelector('.wd-personal-info-form');
+        if(!formInformation) {
+          console.error('No form was found');
+          return;
+        }
+
+        for(const [key, value] of Object.entries(data)) {
+          const input = document.createElement('input');
+          input.type = 'hidden';
+          if(key === 'wd-installation-picker') {
+            input.name = 'שירות התקנה'
+            input.value = 'true';
+          }
+          else {
+            input.name = key;
+            input.value = value;
+          }
+          input.className = 'wd-dynamic-input';
+          formInformation.appendChild(input);
+        }
+
+        console.log(formInformation);
+      });
+
+    });
+  });
+</script>
+
+<style>
+  .wd-product-lead-container {
+    {% comment %} display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    /* gap: 8px; */
+    align-self: stretch;
+
+    border-top: 1px solid #D7D8D9;
+    border-bottom: 1px solid #D7D8D9;
+    background: #FFF; {% endcomment %}
+    display: flex;
+    padding-bottom: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 19px;
+    align-self: stretch;
+    background: var(--background, #F0F0F0);
+
+    {% comment %} border-top: 1px solid var(--border, #D7D8D9);
+    border-bottom: 1px solid var(--border, #D7D8D9);
+    background: var(--white, #FFF); {% endcomment %}
+  }
+
+  .wd-product-leads-container {
+    display: flex;
+    padding: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    align-self: stretch;
+
+    border-top: 1px solid var(--border, #D7D8D9);
+    border-bottom: 1px solid var(--border, #D7D8D9);
+    background: var(--white, #FFF);
+  }
+  .wd-product-lead-header {
+    {% comment %} padding: 16px; {% endcomment %}
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .wd-product-lead-title {
+    align-self: stretch;
+    color: var(--text-title, #213236);
+    margin: 0;
+    /* mobile/h2-heading */
+    font-family: Gibson;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 140%;
+    /* 22.4px */
+  }
+
+  .wd-product-lead-sku {
+    color: #6E6E6E;
+
+    /* mobile/p3 */
+    font-family: "Work Sans";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+
+  .wd-product-lead-sku-value {
+    color: var(--text-title, #213236);
+    font-family: "Work Sans";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+
+  .wd-product-lead-banner {
+    background: #C72D19;
+    display: flex;
+    padding: 8px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+
+    /* Typography */
+    color: var(--white, #FFF);
+    text-align: center;
+    /* mobile/p3-heading */
+    font-family: "Work Sans";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 12px;
+    /* 100% */
+  }
+
+  .wd-product-lead-rating {
+    margin: 0 0 4px;
+  }
+  .rating__stars {
+    direction: ltr;
+  }
+  .rating__star {
+    color: #FFBD00;
+    width: 14px;
+    height: 14px;
+  }
+  .rating__star--empty {
+    color: #FFBD00;
+  }
+
+  .wd-product-lead-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 0px;
+    {% comment %} padding-bottom: 0px; {% endcomment %}
+  }
+
+  .wd-product-lead-divider-padded {
+    width: 100%;
+    height: 1px;
+    background: #D7D8D9;
+    margin: 16px 0;
+  }
+
+
+
+</style>
