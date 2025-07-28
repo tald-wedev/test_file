@@ -1,0 +1,29 @@
+{% assign has_installation_service = product.metafields.custom.has_installation_service %}
+
+{% assign installation_product = product.metafields.custom.installation_product %}
+
+{% if has_installation_service == true and installation_product %}
+  <div class="wd-installation-picker">
+      <div class="wd-installation-picker__checkbox">
+        <input
+          type="checkbox"
+          id="wd-installation-picker"
+          name="wd-installation-picker"
+          value="1"
+        >
+        <label class="wd-installation-picker__label" for="wd-installation-picker">
+          {{- 'products.installation_picker.select_installation_type' | t -}}
+        </label>
+      </div>
+    <p id="installation-error" class="installation-error-message" hidden >יש להוסיף קודם את המוצר הראשי לפני הוספת שירות ההתקנה</p>
+    {% if installation_product.value and installation_product.value.price %}
+      <div class="wd-installation-picker__price">
+        <p>{{ installation_product.value.price | money }}</p>
+      </div>
+    {% endif %}
+  </div>
+  <hr class="seperator-installation-picker">
+{% endif %}
+
+{% render 'wd-js-installation-picker', has_installation_service: has_installation_service, installation_product: installation_product, product: product %}
+{% render 'wd-style-installation-picker', has_installation_service: has_installation_service, installation_product: installation_product %}
