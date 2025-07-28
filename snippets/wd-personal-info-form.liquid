@@ -1,0 +1,271 @@
+{% comment %} TODO: SPLIT INTO 3 PARTS {% endcomment %}
+{% comment %} 1. main - wd-length-selector.liquid {% endcomment %}
+{% comment %} 2. js - wd-js-length-selector.liquid {% endcomment %}
+{% comment %} 3. css - wd-styles-length-selector.liquid {% endcomment %}
+
+<style>
+    .wd-personal-info-form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        padding: 16px;
+        border-top: 1px solid #D7D8D9;
+        background: #FFF;
+    }
+
+    .wd-personal-info-form-fields {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .wd-personal-info-form-title {
+        align-self: stretch;
+        color: var(--Gray-2, #2C2C2E);
+        text-align: right;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 140%;
+        margin-bottom: 0;
+    }
+
+    .wd-personal-info-form-description {
+        align-self: stretch;
+        color: var(--Gray-2, #2C2C2E);
+        text-align: right;
+        font-family: Rubik;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 140%;
+    }
+
+    .wd-personal-info-form-field {
+        position: relative;
+    }
+
+    .wd-personal-info-form-field-input {
+        width: 100%;
+        padding: 16px 12px 8px 12px;
+        font-size: 16px;
+        border: 1px solid var(--border, #D7D8D9);
+
+        background: #fff;
+
+        color: var(--Gray-2, #2C2C2E);
+        text-align: right;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 140%; /* 22.4px */
+    }
+
+    .wd-personal-info-form-field-label {
+        position: absolute;
+        right: 12px;
+        top: 14px;
+        pointer-events: none;
+        transition: 0.2s ease all;
+        background: #fff;
+        padding: 0 4px;
+
+        color: var(--Gray-2, #2C2C2E);
+        text-align: right;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 140%;
+    }
+
+    .wd-personal-info-form-field-input:focus + .wd-personal-info-form-field-label,
+    .wd-personal-info-form-field-input:not(:placeholder-shown) + .wd-personal-info-form-field-label {
+        top: 2px;
+        background-color: transparent !important;
+        right: 10px;
+        font-size: 12px;
+        color: #2C2C2E;
+        background: #fff;
+    }
+
+    textarea.wd-personal-info-form-field-input {
+        min-height: 60px;
+        resize: vertical;
+        height: 164px;
+    }
+
+    .wd-personal-info-form-button {
+        display: flex;
+        padding: 16px;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        align-self: stretch;
+        background: var(--yellow, #FFB80B);
+    }
+
+    .wd-personal-info-form-button-text {
+        color: var(--text, #333);
+        text-align: center;
+        leading-trim: both;
+        text-edge: cap;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 140%;
+    }
+
+    .error-input {
+        border: 1px solid var(--red, #ED1B2E) !important;
+    }
+</style>
+<form class="wd-personal-info-form" >
+    <div class="wd-personal-info-form-header">
+        <h2 class="wd-personal-info-form-title">
+            {{ 'wd-seat-cover-product.personal_info_form.title' | t }}
+        </h2>
+        <p class="wd-personal-info-form-description">
+            {{ 'wd-seat-cover-product.personal_info_form.description' | t }}
+        </p>
+    </div>
+    <div class="wd-personal-info-form-fields">
+        {% comment %} Name {% endcomment %}
+        <div class="wd-personal-info-form-field">
+            <input class="wd-personal-info-form-field-input" type="text" id="personal-info-name" placeholder=" " required>
+            <label for="personal-info-name" class="wd-personal-info-form-field-label">
+                {{ 'wd-seat-cover-product.personal_info_form.name' | t }}
+            </label>
+        </div>
+        
+        {% comment %} Email {% endcomment %}
+        <div class="wd-personal-info-form-field">
+            <input class="wd-personal-info-form-field-input" type="email" id="personal-info-email" placeholder=" " required>
+            <label for="personal-info-email" class="wd-personal-info-form-field-label">
+                {{ 'wd-seat-cover-product.personal_info_form.email' | t }}
+            </label>
+        </div>
+        
+        {% comment %} Phone {% endcomment %}
+        <div class="wd-personal-info-form-field">
+            <input class="wd-personal-info-form-field-input" type="tel" id="personal-info-phone" placeholder=" " required>
+            <label for="personal-info-phone" class="wd-personal-info-form-field-label">
+                {{ 'wd-seat-cover-product.personal_info_form.phone' | t }}
+            </label>
+        </div>
+
+        {% comment %} Message {% endcomment %}
+        <div class="wd-personal-info-form-field">
+            <textarea class="wd-personal-info-form-field-input" id="personal-info-message" placeholder=" " required></textarea>
+            <label for="personal-info-message" class="wd-personal-info-form-field-label">
+                {{ 'wd-seat-cover-product.personal_info_form.message' | t }}
+            </label>
+        </div>
+    </div>
+    <button class="wd-personal-info-form-button" type="submit">
+        <span class="wd-personal-info-form-button-text">
+            {{ 'wd-seat-cover-product.personal_info_form.submit' | t }}
+        </span>
+    </button>
+    </form>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        console.log('DOMContentLoaded dasf dsf d');
+        const form = document.querySelector('.wd-personal-info-form');
+        const nameInput = document.querySelector('#personal-info-name');
+        const emailInput = document.querySelector('#personal-info-email');
+        const phoneInput = document.querySelector('#personal-info-phone');
+        const messageInput = document.querySelector('#personal-info-message');
+        const button = document.querySelector('.wd-personal-info-form-button');
+        
+        // Helper to validate email
+        function isValidEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        // Helper to validate phone (basic, can be improved)
+        function isValidPhone(phone) {
+            return /^\+?\d{7,15}$/.test(phone.replace(/\D/g, ''));
+        }
+
+        const msgValidation = (input) => {
+            // Message validation
+            if (messageInput.value.trim() === '') {
+                messageInput.classList.add('error-input');
+                messageInput.setCustomValidity('אנא הזן הודעה');
+                messageInput.reportValidity();
+                valid = false;
+            } else {
+                messageInput.classList.remove('error-input');
+                messageInput.setCustomValidity('');
+            }
+        }
+
+        const nameValidation = (input) => {
+            // Name validation
+            if (nameInput.value.trim() === '') {
+                nameInput.classList.add('error-input');
+                nameInput.setCustomValidity('אנא הזן שם');
+                nameInput.reportValidity();
+                valid = false;
+            } else {
+                nameInput.classList.remove('error-input');
+                nameInput.setCustomValidity('');
+            }
+        }
+
+        const emailValidation = (input) => {
+            // Email validation
+            if (!isValidEmail(emailInput.value.trim())) {
+                emailInput.classList.add('error-input');
+                emailInput.setCustomValidity('אנא הזן אימייל תקין');
+                emailInput.reportValidity();
+                valid = false;
+            } else {
+                emailInput.classList.remove('error-input');
+                emailInput.setCustomValidity('');
+            }
+        }
+
+        const phoneValidation = (input) => {
+            // Phone validation
+            if (!isValidPhone(phoneInput.value.trim())) {
+                phoneInput.classList.add('error-input');
+                phoneInput.setCustomValidity('אנא הזן מספר טלפון תקין');
+                phoneInput.reportValidity();
+                valid = false;
+            } else {
+                phoneInput.classList.remove('error-input');
+                phoneInput.setCustomValidity('');
+            }
+        }
+
+        // Remove error state on input
+        [nameInput, emailInput, phoneInput, messageInput].forEach(input => {
+            input.addEventListener('input', () => {
+                input.classList.remove('error-input');
+                input.setCustomValidity('');
+            });
+        });
+
+        button.addEventListener('click', (e) => {
+            let valid = true;
+            
+            // Message validation
+            msgValidation(messageInput);
+
+            // Phone validation
+            phoneValidation(phoneInput);
+
+            // Email validation
+            emailValidation(emailInput);
+
+            // Name validation
+            nameValidation(nameInput);
+
+            if (!valid) {
+                e.preventDefault();
+            }
+        });
+    });
+</script>
