@@ -11,10 +11,20 @@
   "sections": {
     "main": {
       "type": "wd-cancel-transaction",
+      "disabled": true,
+      "settings": {
+        "heading": "ביטול הזמנה",
+        "width": "wrapper--narrow"
+      }
+    },
+    "test_form_dwgexG": {
+      "type": "test-form",
+      "name": "wd-form-test",
       "settings": {}
     }
   },
   "order": [
-    "main"
+    "main",
+    "test_form_dwgexG"
   ]
 }

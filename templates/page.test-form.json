@@ -11,6 +11,7 @@
   "sections": {
     "main": {
       "type": "main-page",
+      "disabled": true,
       "settings": {
         "padding_top": 28,
         "padding_bottom": 28
@@ -18,15 +19,22 @@
     },
     "wd_cancel_transaction_PWEi7e": {
       "type": "wd-cancel-transaction",
+      "disabled": true,
       "name": "WD Cancel Order Form",
       "settings": {
         "heading": "ביטול הזמנה",
         "width": "wrapper--narrow"
       }
+    },
+    "test_form_ege7xB": {
+      "type": "test-form",
+      "name": "wd-form-test",
+      "settings": {}
     }
   },
   "order": [
     "main",
-    "wd_cancel_transaction_PWEi7e"
+    "wd_cancel_transaction_PWEi7e",
+    "test_form_ege7xB"
   ]
 }
