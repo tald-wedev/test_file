@@ -1,0 +1,178 @@
+{% comment %} TODO: SPLIT INTO 3 PARTS {% endcomment %}
+{% comment %} 1. main - wd-length-selector.liquid {% endcomment %}
+{% comment %} 2. js - wd-js-length-selector.liquid {% endcomment %}
+{% comment %} 3. css - wd-styles-length-selector.liquid {% endcomment %}
+{% comment %} This Shouyld accept 3 params: title, price and stock {% endcomment %}
+
+{% assign stock_status = '' %}
+{% assign stock_class = '' %}
+{% if stock == 0 %}
+  {% assign stock_status = 'no_stock' %}
+  {% assign stock_class = 'wd-no-stock' %}
+{% elsif stock < 50 %}
+  {% assign stock_status = 'low_stock' %}
+  {% assign stock_class = 'wd-low-stock' %}
+{% else %}
+  {% assign stock_status = 'in_stock' %}
+  {% assign stock_class = 'wd-in-stock' %}
+{% endif %}
+
+{% comment %} <script>
+    // log params for debugging
+    console.log('wd-price-lead params:', {
+        price: '{{ price }}',
+        stock: '{{ stock }}'
+    });
+</script> {% endcomment %}
+
+<div class="wd-price-quantity-lead-container">
+    {% comment %} Price Title {% endcomment %}
+    <div class="wd-price-lead-price-container">
+        <h2 class="wd-price-lead-price-title">
+            {{ 'wd-seat-cover-product.price_lead.price' | t }}:
+        </h2>
+        <p class="wd-price-lead-price-title-price-container">
+            <span class="wd-price-lead-price-title-current-price">{{ price | money }}</span>
+            <span class="wd-price-lead-price-title-old-price">{{ old_price | money }}</span>
+        </p>
+    </div>
+    {% comment %} Stock Status{% endcomment %}
+    {% comment %} 0 => "No Stock" red text, red dot {% endcomment %}
+    {% comment %} 0 < 50 => "Low Stock" orange text, orange dot {% endcomment %}
+    {% comment %} 50+ => "In Stock" green text, green dot {% endcomment %}
+    <div class="wd-price-lead-stock-status-container">
+      <h2 class="wd-price-lead-stock-status-title">
+        {{ 'wd-seat-cover-product.price_lead.stock' | t }}:
+      </h2>
+      <div class="wd-price-lead-stock-status {{ stock_class }}">
+        <div class="wd-price-lead-stock-status-dot {{ stock_class }}"></div>
+        <div class="wd-price-lead-stock-status-text">
+          {{ 'wd-seat-cover-product.price_lead.' | append: stock_status | t }}
+        </div>
+      </div>
+    </div>
+    {% comment %} Quantity Selector {% endcomment %}
+    {% render 'wd-price-lead-quantity-dropdown', stock: stock %}
+</div>
+<style>
+    .wd-price-quantity-lead-container {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .wd-price-lead-price-container {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .wd-price-lead-price-title {
+        color: var(--text-title, #213236);
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 140%;
+        display: inline-block;
+        margin-bottom: 0;
+    }
+
+    .wd-price-lead-price-title-price-container {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .wd-price-lead-price-title-current-price {
+        color: #E00;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 140%;
+
+    }
+
+    .wd-price-lead-price-title-old-price {
+        color: var(--grey-blue, #677279);
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 140%;
+        text-decoration-line: line-through;
+    }
+
+    .wd-price-lead-stock-status-container {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .wd-price-lead-stock-status-title {
+        color: var(--text-title, #213236);
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 140%;
+        margin-bottom: 0;
+    }
+
+    .wd-price-lead-stock-status {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .wd-price-lead-stock-status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #C72D19;
+    }
+
+    .wd-price-lead-stock-status-text {
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 12px; /* 100% */
+    }
+
+    .wd-no-stock {
+        color: #C72D19;
+    }
+
+    .wd-low-stock {
+        color: var(--link, #F35522);
+    }
+
+    .wd-in-stock {
+        color: #008000;
+    }
+
+    .wd-no-stock .wd-price-lead-stock-status-dot {
+        background-color: #C72D19;
+    }
+
+    .wd-low-stock .wd-price-lead-stock-status-dot {
+        background-color: #F35522;
+    }
+
+    .wd-in-stock .wd-price-lead-stock-status-dot {
+        background-color: #008000;
+    }
+
+    /* Quantity Selector */
+    .wd-price-lead-quantity-selector-container {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .wd-price-lead-quantity-selector-title {
+        color: var(--text-title, #213236);
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 140%;
+    }
+    
+</style>
+
