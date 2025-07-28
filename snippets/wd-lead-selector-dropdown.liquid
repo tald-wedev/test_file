@@ -1,0 +1,169 @@
+{% comment %} TODO: SPLIT INTO 3 PARTS {% endcomment %}
+{% comment %} 1. main - wd-length-selector.liquid {% endcomment %}
+{% comment %} 2. js - wd-js-length-selector.liquid {% endcomment %}
+{% comment %} 3. css - wd-styles-length-selector.liquid {% endcomment %}
+
+{% comment %} This SHouyld accept two params {% endcomment %}
+{% comment %} 1. title {% endcomment %}
+{% comment %} 2. options {% endcomment %}
+
+{% assign options_array = options | split: ',' %}
+
+{% comment %} Select Dropdown {% endcomment %}
+<div class="wd-lead-selector-dropdown-wrapper">
+  {% if title %}
+    <label class="wd-lead-selector-dropdown-title">{{ title }}</label>
+  {% endif %}
+  <div class="wd-lead-selector-dropdown-custom wd-lead-selector-dropdown-js" tabindex="0" role="listbox" aria-haspopup="listbox" aria-expanded="false">
+    <span class="wd-lead-selector-dropdown-selected">{{ 'wd-seat-cover-product.lead_selector_dropdown.choose_selection' | t }}</span>
+    <span class="wd-lead-selector-dropdown-arrow">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 4L6 8L2 4" stroke="#ED1B2E" stroke-width="2" stroke-linecap="square"/>
+      </svg>
+    </span>
+    <div class="wd-lead-selector-dropdown-options" role="listbox">
+      {% for option in options_array %}
+        {% assign parts = option | split: ':' %}
+        <div class="wd-lead-selector-dropdown-option" role="option" data-value="{{ parts[0] }}">{{ parts[1] }}</div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    var dropdowns = document.querySelectorAll('.wd-lead-selector-dropdown-js');
+    dropdowns.forEach(function(dropdown) {
+      var selected = dropdown.querySelector('.wd-lead-selector-dropdown-selected');
+      var options = dropdown.querySelector('.wd-lead-selector-dropdown-options');
+      var optionDivs = dropdown.querySelectorAll('.wd-lead-selector-dropdown-option');
+      var isOpen = false;
+
+      function openDropdown() {
+        document.querySelectorAll('.wd-lead-selector-dropdown-wrapper').forEach(wrapper => {
+          wrapper.style.zIndex = '3';
+        });
+
+        dropdown.closest('.wd-lead-selector-dropdown-wrapper').style.zIndex = '4';
+
+        options.style.display = 'block';
+        dropdown.setAttribute('aria-expanded', 'true');
+        isOpen = true;
+      }
+      function closeDropdown() {
+        options.style.display = 'none';
+        dropdown.setAttribute('aria-expanded', 'false');
+        dropdown.closest('.wd-lead-selector-dropdown-wrapper').style.zIndex = '3';
+        isOpen = false;
+      }
+      dropdown.addEventListener('click', function(e) {
+        e.stopPropagation();
+        isOpen ? closeDropdown() : openDropdown();
+      });
+      optionDivs.forEach(function(opt) {
+        opt.addEventListener('click', function(e) {
+          e.stopPropagation();
+          selected.textContent = opt.textContent;
+          selected.setAttribute('data-value', opt.getAttribute('data-value'));
+          closeDropdown();
+        });
+      });
+      document.addEventListener('click', function(event) {
+        if (isOpen && !dropdown.contains(event.target)) closeDropdown();
+      });
+      dropdown.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          isOpen ? closeDropdown() : openDropdown();
+        }
+        if (e.key === 'Escape') {
+          closeDropdown();
+        }
+        // Basic arrow navigation
+        if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+          e.preventDefault();
+          var focused = document.activeElement;
+          var idx = Array.prototype.indexOf.call(optionDivs, focused);
+          if (e.key === 'ArrowDown' && idx < optionDivs.length - 1) {
+            optionDivs[idx + 1].focus();
+          } else if (e.key === 'ArrowUp' && idx > 0) {
+            optionDivs[idx - 1].focus();
+          }
+        }
+      });
+      // Make options focusable
+      optionDivs.forEach(function(opt) {
+        opt.setAttribute('tabindex', '0');
+      });
+    });
+  })();
+</script>
+
+<style>
+  .wd-lead-selector-dropdown-title {
+    color: var(--text-title, #213236);
+
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 140%; /* 22.4px */
+    }
+.wd-lead-selector-dropdown-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  {% comment %} wanted to add z-index here {% endcomment %}
+}
+.wd-lead-selector-dropdown-custom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  width: 100%;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+  border-radius: 4px;
+}
+.wd-lead-selector-dropdown-selected {
+  flex: 1;
+  color: #333;
+  font-family: "Work Sans";
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 140%;
+}
+.wd-lead-selector-dropdown-arrow {
+  /* margin-left: 10px; */
+  pointer-events: none;
+}
+.wd-lead-selector-dropdown-options {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 100%;
+  width: 100%;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-top: none;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border-radius: 0 0 4px 4px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+.wd-lead-selector-dropdown-option {
+  padding: 10px;
+  cursor: pointer;
+  font-family: "Work Sans";
+  font-size: 16px;
+  color: #333;
+}
+.wd-lead-selector-dropdown-option:hover,
+.wd-lead-selector-dropdown-option:focus {
+  background: #f5f5f5;
+  outline: none;
+}
+</style>
